@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS t_mails;
+DROP TABLE IF EXISTS t_addresses;
+DROP TABLE IF EXISTS t_people;
