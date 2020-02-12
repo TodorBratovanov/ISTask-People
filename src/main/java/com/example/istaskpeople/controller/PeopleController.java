@@ -1,6 +1,5 @@
 package com.example.istaskpeople.controller;
 
-import com.example.istaskpeople.db.entity.Person;
 import com.example.istaskpeople.model.PersonDTO;
 import com.example.istaskpeople.service.PeopleService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class PeopleController {
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable(value = "id") long id, Model model) {
-        Optional<Person> optionalPerson = peopleService.findById(id);
+        Optional<PersonDTO> optionalPerson = peopleService.findById(id);
         if (!optionalPerson.isPresent()) {
             return "index";
         }
@@ -41,28 +40,35 @@ public class PeopleController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updatePerson(@PathVariable(value = "id") long id, @Valid Person person, BindingResult result, Model model) {
+    public String updatePerson(@PathVariable(value = "id") long id, @Valid PersonDTO person, BindingResult result, Model model) {
         if (result.hasErrors()) {
             person.setId(id);
             return "update-person";
         }
-        peopleService.update(person);
+        peopleService.save(person);
         model.addAttribute("people", peopleService.findAll());
         return "index";
     }
 
     @GetMapping(value = "/add")
-    public String showAddForm(Person person, Model model) {
+    public String showAddForm(PersonDTO person) {
         return "add-person";
     }
 
     @PostMapping(value = "/add")
-    public String addPerson(Person person, Model model) {
-        return "add-person";
+    public String addPerson(@Valid PersonDTO person, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-person";
+        }
+        peopleService.save(person);
+        model.addAttribute("people", peopleService.findAll());
+        return "index";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String deletePerson(@PathVariable(value = "id") long id, Model model) {
+        peopleService.delete(id);
+        model.addAttribute("people", peopleService.findAll());
         return "index";
     }
 

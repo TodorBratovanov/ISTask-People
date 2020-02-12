@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_people")
-@SecondaryTable(name = "t_addresses", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id"))
-@SecondaryTable(name = "t_mails", pkJoinColumns = @PrimaryKeyJoinColumn(name = "id"))
+@SecondaryTable(name = "t_addresses", pkJoinColumns = @PrimaryKeyJoinColumn(name = "t_people_id"))
+@SecondaryTable(name = "t_mails", pkJoinColumns = @PrimaryKeyJoinColumn(name = "t_people_id"))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class Person {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "full_name")
     private String fullName;

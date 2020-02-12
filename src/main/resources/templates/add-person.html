@@ -4,21 +4,36 @@
     <meta charset="UTF-8">
     <title>IS people - add new</title>
 
-    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.4.1.1/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" th:href="@{/css/people.css}"/>
 </head>
 <body>
 
 <div class="container">
-    <form action="#" th:action="@{~/people/add}" th:object="${person}" method="post">
-        <label for="name">Full Name</label>
-        <input type="text" th:field="*{name}" id="name" placeholder="Full Name">
-        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-        <label for="pin">PIN</label>
-        <input type="text" th:field="*{pin}" id="pin" placeholder="PIN">
-        <span th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}"></span>
-        <input type="submit" value="Add Person">
-    </form>
+    <nav th:replace="header :: header">
+    </nav>
+    <div class="person-form">
+        <form action="#" th:action="@{~/people/add}" th:object="${personDTO}" method="post">
+            <label for="fullName">Full Name</label>
+            <input type="text" th:field="*{fullName}" id="fullName" placeholder="Full Name">
+            <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+            <label for="pin">PIN</label>
+            <input type="text" th:field="*{pin}" id="pin" placeholder="PIN">
+            <span th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}"></span>
+            <label for="addressType">Address Type</label>
+            <input type="text" th:field="*{addressType}" id="addressType" placeholder="Address Type">
+            <span th:if="${#fields.hasErrors('addressType')}" th:errors="*{addressType}"></span>
+            <label for="addressInfo">Address Info</label>
+            <input type="text" th:field="*{addressInfo}" id="addressInfo" placeholder="Address Info">
+            <span th:if="${#fields.hasErrors('addressInfo')}" th:errors="*{addressInfo}"></span>
+            <label for="emailType">Email Type</label>
+            <input type="text" th:field="*{emailType}" id="emailType" placeholder="Email Type">
+            <span th:if="${#fields.hasErrors('emailType')}" th:errors="*{emailType}"></span>
+            <label for="email">Email</label>
+            <input type="text" th:field="*{email}" id="email" placeholder="Email">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            <input type="submit" value="Add Person">
+        </form>
+    </div>
 </div>
 
 </body>

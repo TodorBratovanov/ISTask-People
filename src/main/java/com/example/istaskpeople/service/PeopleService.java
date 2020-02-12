@@ -1,9 +1,10 @@
 package com.example.istaskpeople.service;
 
+import com.example.istaskpeople.db.entity.Address;
+import com.example.istaskpeople.db.entity.Mail;
 import com.example.istaskpeople.db.entity.Person;
 import com.example.istaskpeople.db.repository.PersonRepository;
 import com.example.istaskpeople.model.PersonDTO;
-import com.google.common.collect.ImmutableList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,16 +34,12 @@ public class PeopleService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Person> findById(long id) {
-        return personRepository.findById(id);
+    public Optional<PersonDTO> findById(long id) {
+        return personRepository.findById(id).map(this::toDto);
     }
 
-    public Person create(Person person) {
-        return personRepository.save(person);
-    }
-
-    public Person update(Person person) {
-        return person;
+    public void save(PersonDTO person) {
+        personRepository.save(toEntity(person));
     }
 
     public void delete(long id) {
@@ -50,15 +47,26 @@ public class PeopleService {
     }
 
     private PersonDTO toDto(Person person) {
-        return PersonDTO.builder()
-                .id(person.getId())
-                .fullName(person.getFullName())
-                .pin(person.getPin())
-                .addressType(person.getAddress().getAddressType())
-                .addressInfo(person.getAddress().getAddressInfo())
-                .emailType(person.getMail().getEmailType())
-                .email(person.getMail().getEmail())
-                .build();
+        return new PersonDTO(
+                person.getId(),
+                person.getFullName(),
+                person.getPin(),
+                person.getAddress().getAddressType(),
+                person.getAddress().getAddressInfo(),
+                person.getMail().getEmailType(),
+                person.getMail().getEmail()
+        );
+    }
+
+    private Person toEntity(PersonDTO dto) {
+        Address address = new Address(dto.getAddressType(), dto.getAddressInfo());
+        Mail mail = new Mail(dto.getEmailType(), dto.getEmail());
+        Person person = new Person();
+        person.setFullName(dto.getFullName());
+        person.setPin(dto.getPin());
+        person.setAddress(address);
+        person.setMail(mail);
+        return person;
     }
 
 }

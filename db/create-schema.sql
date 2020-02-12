@@ -16,12 +16,9 @@ INSERT INTO `t_people` (`full_name`, `pin`) VALUES ('Milena Raykova', '013135151
 INSERT INTO `t_people` (`full_name`, `pin`) VALUES ('Stanislava Yordanova', '1645486021');
 
 CREATE TABLE `t_mails` (
-  `id` INT NOT NULL AUTO_INCREMENT,
   `t_people_id` INT NOT NULL,
   `email_type` VARCHAR(5) NOT NULL,
   `email` VARCHAR(40) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `a_idx` (`t_people_id` ASC) VISIBLE,
   CONSTRAINT `t_people_id_m`
     FOREIGN KEY (`t_people_id`)
@@ -38,12 +35,9 @@ INSERT INTO `t_mails` (`t_people_id`, `email_type`, `email`) VALUES ('5', 'type1
 INSERT INTO `t_mails` (`t_people_id`, `email_type`, `email`) VALUES ('6', 'type1', 'stasi1@abv.bg');
 
 CREATE TABLE `t_addresses` (
-  `id` INT NOT NULL AUTO_INCREMENT,
   `t_people_id` INT NOT NULL,
   `addr_type` VARCHAR(5) NOT NULL,
   `addr_info` VARCHAR(300) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `t_people_id_idx` (`t_people_id` ASC) VISIBLE,
   CONSTRAINT `t_people_id_a`
     FOREIGN KEY (`t_people_id`)

@@ -1,10 +1,10 @@
 package com.example.istaskpeople.model;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
-@Builder
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PersonDTO {
 
     private long id;
