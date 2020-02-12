@@ -1,14 +1,18 @@
 package com.example.istaskpeople.controller;
 
+import com.example.istaskpeople.db.entity.Person;
 import com.example.istaskpeople.model.PersonDTO;
 import com.example.istaskpeople.service.PeopleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,6 +27,42 @@ public class PeopleController {
                 peopleService.findAll() :
                 peopleService.findAllByFullName(name);
         model.addAttribute("people", allByFullName);
+        return "index";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable(value = "id") long id, Model model) {
+        Optional<Person> optionalPerson = peopleService.findById(id);
+        if (!optionalPerson.isPresent()) {
+            return "index";
+        }
+        model.addAttribute("person", optionalPerson.get());
+        return "update-person";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updatePerson(@PathVariable(value = "id") long id, @Valid Person person, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            person.setId(id);
+            return "update-person";
+        }
+        peopleService.update(person);
+        model.addAttribute("people", peopleService.findAll());
+        return "index";
+    }
+
+    @GetMapping(value = "/add")
+    public String showAddForm(Person person, Model model) {
+        return "add-person";
+    }
+
+    @PostMapping(value = "/add")
+    public String addPerson(Person person, Model model) {
+        return "add-person";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String deletePerson(@PathVariable(value = "id") long id, Model model) {
         return "index";
     }
 

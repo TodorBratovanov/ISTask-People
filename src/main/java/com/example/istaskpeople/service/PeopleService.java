@@ -33,6 +33,22 @@ public class PeopleService {
                 .collect(Collectors.toList());
     }
 
+    public Optional<Person> findById(long id) {
+        return personRepository.findById(id);
+    }
+
+    public Person create(Person person) {
+        return personRepository.save(person);
+    }
+
+    public Person update(Person person) {
+        return person;
+    }
+
+    public void delete(long id) {
+        personRepository.deleteById(id);
+    }
+
     private PersonDTO toDto(Person person) {
         return PersonDTO.builder()
                 .id(person.getId())

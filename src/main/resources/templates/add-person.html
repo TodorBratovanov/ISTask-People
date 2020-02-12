@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IS people - add new</title>
+
+    <link rel="stylesheet" th:href="@{webjars/bootstrap/4.4.1.1/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<div class="container">
+    <form action="#" th:action="@{~/people/add}" th:object="${person}" method="post">
+        <label for="name">Full Name</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Full Name">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <label for="pin">PIN</label>
+        <input type="text" th:field="*{pin}" id="pin" placeholder="PIN">
+        <span th:if="${#fields.hasErrors('pin')}" th:errors="*{pin}"></span>
+        <input type="submit" value="Add Person">
+    </form>
+</div>
+
+</body>
+</html>
