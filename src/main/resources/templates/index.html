@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IS People</title>
+
+    <link rel="stylesheet" th:href="@{/css/people.css}"/>
+</head>
+<body>
+
+    <div class="container">
+        <h2>People</h2>
+        <form th:object="${people}" th:action="@{/people}" method="get">
+            <div class="search-bar">
+                <input type="text" name="search" id="search" th:value="${search}"/>
+                <input type="submit" value="Search"/>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th> ID </th>
+                    <th> Full name </th>
+                    <th> Pin </th>
+                    <th> Address Type </th>
+                    <th> Address Info </th>
+                    <th> Email Type </th>
+                    <th> Email </th>
+                    <th> </th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${people.empty}">
+                    <td colspan="2"> No People Found </td>
+                </tr>
+                <tr th:each="person : ${people}">
+                    <td><span th:text="${person.id}"> ID </span></td>
+                    <td><span th:text="${person.fullName}"> Name </span></td>
+                    <td><span th:text="${person.pin}"> Pin </span></td>
+                    <td><span th:text="${person.addressType}"> Address Type </span></td>
+                    <td><span th:text="${person.addressInfo}"> Address Info </span></td>
+                    <td><span th:text="${person.emailType}"> Email Type </span></td>
+                    <td><span th:text="${person.email}"> Email </span></td>
+                    <td><a th:href="@{/people/edit/{id}(id=${person.id})}">Edit</a></td>
+                    <td><a th:href="@{/people/delete/{id}(id=${person.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <p><a href="/people/add">Add new person</a></p>
+        </form>
+    </div>
+
+</body>
+</html>
