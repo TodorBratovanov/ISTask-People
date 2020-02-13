@@ -21,7 +21,6 @@
                 <table>
                     <thead>
                     <tr>
-                        <th> ID </th>
                         <th> Full name </th>
                         <th> Pin </th>
                         <th> Address Type </th>
@@ -37,7 +36,6 @@
                         <td colspan="2"> No People Found </td>
                     </tr>
                     <tr th:each="person : ${people}">
-                        <td><span th:text="${person.id}"> ID </span></td>
                         <td><span th:text="${person.fullName}"> Name </span></td>
                         <td><span th:text="${person.pin}"> Pin </span></td>
                         <td><span th:text="${person.addressType}"> Address Type </span></td>
@@ -49,6 +47,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div>
+                    <p id="message" th:text="${message}"></p>
+                </div>
                 <p><a class="link-to-form" href="/people/add">Add new person</a></p>
             </form>
         </div>

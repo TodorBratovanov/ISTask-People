@@ -45,8 +45,10 @@ public class PeopleController {
             person.setId(id);
             return "update-person";
         }
-        peopleService.save(person);
+        Optional<PersonDTO> optionalUpdated = peopleService.update(person);
         model.addAttribute("people", peopleService.findAll());
+        optionalUpdated.ifPresent(personDTO ->
+                model.addAttribute("message", String.format("%s successfully updated.", personDTO.getFullName())));
         return "index";
     }
 
@@ -60,15 +62,18 @@ public class PeopleController {
         if (result.hasErrors()) {
             return "add-person";
         }
-        peopleService.save(person);
+        PersonDTO created = peopleService.save(person);
         model.addAttribute("people", peopleService.findAll());
+        model.addAttribute("message", String.format("%s successfully added.", created.getFullName()));
         return "index";
     }
 
     @GetMapping(value = "/delete/{id}")
     public String deletePerson(@PathVariable(value = "id") long id, Model model) {
-        peopleService.delete(id);
+        Optional<PersonDTO> deletedOptional = peopleService.delete(id);
         model.addAttribute("people", peopleService.findAll());
+        deletedOptional.ifPresent(personDTO ->
+                model.addAttribute("message", String.format("%s successfully added.", personDTO.getFullName())));
         return "index";
     }
 

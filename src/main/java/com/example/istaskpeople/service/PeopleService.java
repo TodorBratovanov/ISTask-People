@@ -38,12 +38,29 @@ public class PeopleService {
         return personRepository.findById(id).map(this::toDto);
     }
 
-    public void save(PersonDTO person) {
-        personRepository.save(toEntity(person));
+    public PersonDTO save(PersonDTO person) {
+        return toDto(personRepository.save(toEntity(person)));
     }
 
-    public void delete(long id) {
-        personRepository.deleteById(id);
+    public Optional<PersonDTO> update(PersonDTO dto) {
+        return personRepository
+                .findById(dto.getId())
+                .map(p -> {
+                    p.setFullName(dto.getFullName());
+                    p.setPin(dto.getPin());
+                    p.getAddress().setAddressType(dto.getAddressType());
+                    p.getAddress().setAddressInfo(dto.getAddressInfo());
+                    p.getMail().setEmailType(dto.getEmailType());
+                    p.getMail().setEmail(dto.getEmail());
+                    return toDto(personRepository.save(p));
+                });
+    }
+
+    public Optional<PersonDTO> delete(long id) {
+        return personRepository.findById(id).map(p -> {
+            personRepository.delete(p);
+            return toDto(p);
+        });
     }
 
     private PersonDTO toDto(Person person) {

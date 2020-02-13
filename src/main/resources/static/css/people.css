@@ -78,3 +78,8 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: #f58545;
 }
+
+form span {
+    display: block;
+    color: #f52a31;
+}
