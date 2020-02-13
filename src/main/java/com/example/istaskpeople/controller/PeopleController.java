@@ -35,7 +35,7 @@ public class PeopleController {
         if (!optionalPerson.isPresent()) {
             return "index";
         }
-        model.addAttribute("person", optionalPerson.get());
+        model.addAttribute("personDTO", optionalPerson.get());
         return "update-person";
     }
 
@@ -73,7 +73,7 @@ public class PeopleController {
         Optional<PersonDTO> deletedOptional = peopleService.delete(id);
         model.addAttribute("people", peopleService.findAll());
         deletedOptional.ifPresent(personDTO ->
-                model.addAttribute("message", String.format("%s successfully added.", personDTO.getFullName())));
+                model.addAttribute("message", String.format("%s successfully deleted.", personDTO.getFullName())));
         return "index";
     }
 

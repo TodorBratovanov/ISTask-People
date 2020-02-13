@@ -37,7 +37,7 @@ tbody tr:hover {
     width: 15%;
 }
 
-.link-to-form:hover {
+a:not(.noHover):hover {
     color: #f58545;
 }
 
@@ -79,7 +79,12 @@ input[type=submit]:hover {
     background-color: #f58545;
 }
 
-form span {
+.errors {
     display: block;
     color: #f52a31;
+}
+
+.hiddenDiv {
+    display: none;
+    padding-bottom: 10px;
 }
