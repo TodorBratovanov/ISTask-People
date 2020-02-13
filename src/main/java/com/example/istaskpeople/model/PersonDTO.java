@@ -2,7 +2,7 @@ package com.example.istaskpeople.model;
 
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -13,7 +13,7 @@ public class PersonDTO {
 
     private long id;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 90)
     @Pattern(regexp = "^[A-Za-zА-Яа-я -]+$", message = "Must contain latin or cyrillic letters, space or hyphen")
     private String fullName;
@@ -21,14 +21,14 @@ public class PersonDTO {
     @Pattern(regexp = "^[0-9]{10}$", message = "Must contain 10 digit number")
     private String pin;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 5)
     private String addressType;
 
     @Size(max = 300)
     private String addressInfo;
 
-    @NotNull
+    @NotEmpty
     @Size(max = 5)
     private String emailType;
 
